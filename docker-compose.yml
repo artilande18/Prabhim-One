@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: registeration_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Arti2025
+      POSTGRES_PASSWORD: CHANGE_ME 
     ports:
       - "5432:5432"
     volumes:
@@ -20,7 +20,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/registeration_db
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: Arti2025
+      SPRING_DATASOURCE_PASSWORD: CHANGE_ME
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       JWT_SECRET: your-very-long-secret-key-string-here-change-it
     depends_on:

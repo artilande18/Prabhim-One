@@ -143,20 +143,6 @@ public class AuthController {
         ));
     }
 
-    // @PostMapping("/logout-all/")
-    // public ResponseEntity<?> logoutAll(@RequestHeader("Authorization") String authHeader) {
-    //     String token = authHeader.replace("Bearer ", "");
-    //     UUID userId = jwtService.extractUserId(token);
-
-    //     System.out.println("Logout-All called for userId: " + userId);
-
-    //     authService.logoutAll(userId);
-
-    //     return ResponseEntity.ok(Map.of(
-    //             "success", true,
-    //             "message", "Logged out from all active sessions successfully."
-    //     ));
-    // }
 
     @PostMapping("/logout-all/")
 public ResponseEntity<?> logoutAll(@RequestHeader("Authorization") String authHeader) {
