@@ -1,0 +1,30 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: registration-postgres
+    environment:
+      POSTGRES_DB: registeration_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Arti2025
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: registration-backend
+    ports:
+      - "9191:9191"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/registeration_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Arti2025
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JWT_SECRET: your-very-long-secret-key-string-here-change-it
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
