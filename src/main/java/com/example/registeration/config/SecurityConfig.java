@@ -14,8 +14,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
-        
-
         http
             // Disable CSRF for REST APIs
             .csrf(csrf -> csrf.disable())
@@ -29,18 +27,31 @@ public class SecurityConfig {
                 "/api/v1/auth/logout/",
                 "/api/v1/auth/sessions/",
                 "/api/v1/auth/logout-all/",
-                "/error" // 👈 allow error forwarding
+                "/api/invoices/",
+                "/api/invoices/{id}/",
+                "/api/invoices/{id}/mark-sent/",
+                "/api/customers/",
+                "/api/customers/{id}/",
+                "/api/customers/{id}/restore/",
+                "/api/customers/{id}/deactivate/",
+                "/api/customers/{id}/activate/",
+                "/api/products/",
+                "/api/products/{id}/",
+                "/api/products/{id}/restore/",
+                "/api/products/{id}/deactivate/",
+                "/api/products/{id}/activate/",
+                "/api/products/bulk-delete/",
+                "/api/products/bulk-activate/",
+                "/api/products/bulk-deactivate/",
+                "/error" //  allow error forwarding
             ).permitAll()
             .anyRequest().authenticated());
 
         return http.build();
-
-
     }
 
      @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-    
+    }  
 }
