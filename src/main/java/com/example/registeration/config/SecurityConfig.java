@@ -43,6 +43,19 @@ public class SecurityConfig {
                 "/api/products/bulk-delete/",
                 "/api/products/bulk-activate/",
                 "/api/products/bulk-deactivate/",
+                "/api/v1/vendors/",
+                "/api/v1/vendors/{id}/",
+                "/api/v1/purchases/",
+                "/api/v1/purchases/{id}/",
+                "/api/v1/purchase-orders/",
+                "/api/v1/purchase-orders/{id}/",
+                "/api/v1/purchase-orders/{id}/restore/",
+                "/api/v1/purchase-orders/{id}/permanent/",
+                "/api/v1/purchase-orders/{id}/convert-to-bill/",
+                "/api/v1/bills/",
+                "/api/v1/bills/{id}/",
+                "/api/v1/profile/**",
+                "/api/v1/expenses/**",
                 "/error" //  allow error forwarding
             ).permitAll()
             .anyRequest().authenticated());
