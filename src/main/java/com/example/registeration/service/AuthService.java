@@ -24,6 +24,8 @@ import com.example.registeration.repository.SessionRepository;
 import com.example.registeration.repository.UserRepository;
 import com.example.registeration.security.JwtService;
 
+import com.example.registeration.dto.ResetPasswordRequest;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -33,17 +35,20 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final SessionRepository sessionRepository;
+    private final EmailService emailService;
 
     public AuthService(
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             JwtService jwtService,
-            SessionRepository sessionRepository) {
+            SessionRepository sessionRepository,
+            EmailService emailService) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.sessionRepository = sessionRepository;
+        this.emailService = emailService;
     }
 
     public User register(RegisterRequest request) {
@@ -69,6 +74,7 @@ public class AuthService {
         user.setOtpExpiry(LocalDateTime.now().plusMinutes(10));
 
         System.out.println("OTP for " + user.getEmail() + " = " + otp);
+        emailService.sendOtpEmail(user.getEmail(), otp, "registration");
 
         return userRepository.save(user);
     }
@@ -116,6 +122,7 @@ public class AuthService {
         user.setUpdatedAt(LocalDateTime.now());
 
         System.out.println("New OTP for " + user.getEmail() + " = " + otp);
+        emailService.sendOtpEmail(user.getEmail(), otp, purpose);
 
         userRepository.save(user);
     }
@@ -215,6 +222,30 @@ public class AuthService {
         response.setExpiresAt(session.getExpiresAt());
         response.setCurrent(session.isCurrent());
         return response;
+    }
+
+    public void resetPassword(ResetPasswordRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (user.getVerificationOtp() == null) {
+            throw new InvalidOtpException("OTP not found");
+        }
+        if (!user.getVerificationOtp().equals(request.getOtp())) {
+            throw new InvalidOtpException("Invalid OTP");
+        }
+        if (user.getOtpExpiry() == null || user.getOtpExpiry().isBefore(LocalDateTime.now())) {
+            throw new OtpExpiredException("OTP has expired");
+        }
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new IllegalArgumentException("Passwords do not match");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        user.setVerificationOtp(null);
+        user.setOtpExpiry(null);
+        user.setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user);
     }
 
 }

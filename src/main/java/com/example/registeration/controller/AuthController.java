@@ -19,6 +19,7 @@ import com.example.registeration.dto.LoginResponse;
 import com.example.registeration.dto.LogoutRequest;
 import com.example.registeration.dto.RegisterRequest;
 import com.example.registeration.dto.ResendOtpRequest;
+import com.example.registeration.dto.ResetPasswordRequest;
 import com.example.registeration.dto.SessionResponse;
 import com.example.registeration.dto.TokenRefreshRequest;
 import com.example.registeration.dto.UserResponse;
@@ -79,6 +80,18 @@ public class AuthController {
                 Map.of(
                         "success", true,
                         "message", "Verification OTP sent to your email."
+                )
+        );
+    }
+
+    @PostMapping("/reset-password/")
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request);
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "success", true,
+                        "message", "Password reset successfully. You can now log in."
                 )
         );
     }
