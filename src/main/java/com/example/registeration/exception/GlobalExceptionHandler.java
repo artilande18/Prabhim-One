@@ -51,5 +51,31 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("success", false, "message", ex.getMessage()));
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleNotFound(
+            ResourceNotFoundException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of(
+                        "success", false,
+                        "message", ex.getMessage(),
+                        "data", Map.of()
+                ));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleBadRequest(
+            IllegalArgumentException ex) {
+
+        return ResponseEntity
+                .badRequest()
+                .body(Map.of(
+                        "success", false,
+                        "message", ex.getMessage(),
+                        "data", Map.of()
+                ));
+    }
     
 }

@@ -27,6 +27,15 @@ public class User {
     private String password;
 
     private String profileImage;
+    private String designation;
+    private String avatar;
+
+    @jakarta.persistence.Column(columnDefinition = "TEXT")
+    private String profilePic;
+
+    private String timeZone;
+    private String theme;
+
     private boolean emailVerified = false;
     private boolean active = true;
     private boolean staff = false;
@@ -162,6 +171,46 @@ public class User {
 
     public void setOtpExpiry(LocalDateTime otpExpiry) {
         this.otpExpiry = otpExpiry;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
 }
