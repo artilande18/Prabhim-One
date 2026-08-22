@@ -6,6 +6,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
@@ -15,6 +19,7 @@ public class SecurityConfig {
             throws Exception {
 
         http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             // Disable CSRF for REST APIs
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
@@ -55,8 +60,14 @@ public class SecurityConfig {
                 "/api/v1/purchase-orders/{id}/convert-to-bill/",
                 "/api/v1/bills/",
                 "/api/v1/bills/{id}/",
-                "/api/v1/profile/**",
-                "/api/v1/expenses/**",
+                "/api/v1/estimates/",
+                "/api/v1/estimates/{id}/",
+                "/api/v1/profile/",
+                "/api/v1/profile/change-password/",
+                "/api/v1/profile/upload-picture/",
+                "/api/v1/profile/picture/",
+                "/api/v1/expenses/",
+                "/api/v1/expenses/{id}/",
                 "/error" //  allow error forwarding
             ).permitAll()
             .anyRequest().authenticated());
@@ -64,8 +75,24 @@ public class SecurityConfig {
         return http.build();
     }
 
-     @Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }  
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:5173", 
+            "https://invoice.prabhimtechnologies.in"
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+        configuration.setAllowCredentials(true);
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }
