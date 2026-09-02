@@ -72,6 +72,14 @@ public class SecurityConfig {
                 "/api/v1/profile/picture/",
                 "/api/v1/expenses/",
                 "/api/v1/expenses/{id}/",
+                "/api/v1/settings",
+                "/api/v1/settings/",
+                "/api/v1/payments",
+                "/api/v1/payments/",
+                "/api/v1/payments/{id}/",
+                "/api/v1/credit-notes",
+                "/api/v1/credit-notes/",
+                "/api/v1/credit-notes/{id}/",
                 "/error" //  allow error forwarding
             ).permitAll()
             .anyRequest().authenticated());

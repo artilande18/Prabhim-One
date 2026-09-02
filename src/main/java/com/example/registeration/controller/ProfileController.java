@@ -53,7 +53,7 @@ public class ProfileController {
         }
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping("/")
     public ResponseEntity<?> getProfile(
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         UUID userId = getUserId(authHeader);
@@ -61,7 +61,7 @@ public class ProfileController {
         return ResponseEntity.ok(profile);
     }
 
-    @PutMapping({"", "/"})
+    @PutMapping("/")
     public ResponseEntity<?> updateProfile(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestBody ProfileUpdateRequest request) {
@@ -73,7 +73,7 @@ public class ProfileController {
         ));
     }
 
-    @PostMapping({"/change-password", "/change-password/"})
+    @PostMapping("/change-password/")
     public ResponseEntity<?> changePassword(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestBody ChangePasswordRequest request) {
@@ -84,7 +84,7 @@ public class ProfileController {
         ));
     }
 
-    @PostMapping({"/upload-picture", "/upload-picture/"})
+    @PostMapping("/upload-picture/")
     public ResponseEntity<?> uploadPicture(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam("profilePic") MultipartFile file) {
@@ -99,7 +99,7 @@ public class ProfileController {
         ));
     }
 
-    @DeleteMapping({"/picture", "/picture/"})
+    @DeleteMapping("/picture/")
     public ResponseEntity<?> deletePicture(
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         UUID userId = getUserId(authHeader);
@@ -110,7 +110,7 @@ public class ProfileController {
     }
 
     // Public endpoint to download/render profile pictures
-    @GetMapping("/picture/{userId}")
+    @GetMapping("/picture/{userId}/")
     public ResponseEntity<byte[]> getPicture(@PathVariable UUID userId) {
         Map<String, String> outContentType = new LinkedHashMap<>();
         byte[] imageBytes = profileService.getProfilePictureBytes(userId, outContentType);
