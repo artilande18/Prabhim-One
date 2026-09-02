@@ -1,0 +1,246 @@
+﻿# Prabhim_One
+
+# Invoice Management System - Backend
+
+A Spring Boot REST API backend for the Invoice Management System.
+
+This project provides authentication and user management APIs using Java, Spring Boot, Spring Security, JWT, PostgreSQL, JPA/Hibernate, and BCrypt password encryption.
+
+## Project Overview
+
+The backend is responsible for providing REST APIs that can be consumed by the frontend application.
+
+The frontend and backend are developed separately.
+
+### Backend Responsibilities
+
+- User registration
+- Email OTP verification
+- Resend OTP
+- Password encryption
+- JWT authentication
+- Login
+- Token refresh
+- Logout
+- User session management
+- User profile management
+- PostgreSQL database integration
+- API validation
+- Error handling
+- Secure authentication
+- 
+# Technologies Used
+
+| Technology | Version / Details |
+| Java | 17 |
+| Spring Boot | 4.x |
+| Spring Security | JWT Authentication |
+| Spring Data JPA | Hibernate |
+| PostgreSQL | Database |
+| Maven | Build Tool |
+| BCrypt | Password Encryption |
+| JWT | Authentication |
+| REST API | Backend API |
+| Docker | Containerization |
+| Postman | API Testing |
+| VS Code | Development Environment |
+
+---
+Base URL http://localhost:9191
+
+## Authentication APIs
+## Register User : POST http://localhost:9191/api/v1/auth/register/
+ Authentication : No authentication required
+Request
+{
+  "email": "user@example.com",
+  "password": "Password123!",
+  "password_confirm": "Password123!",
+  "first_name": "John",
+  "last_name": "Doe",
+  "phone": "+1234567890"
+}
+Success Response
+{
+  "success": true,
+  "message": "User registered successfully. A verification OTP has been sent to your email.",
+  "data": {
+    "id": "uuid-string-format",
+    "email": "user@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "+1234567890",
+    "profile_image": null,
+    "is_email_verified": false,
+    "is_active": true,
+    "is_staff": false,
+    "is_superuser": false,
+    "created_at": "2026-07-04T08:00:00Z",
+    "updated_at": "2026-07-04T08:00:00Z"
+  }
+}
+
+## Verify Email
+POST /api/v1/auth/verify-email/
+Authentication : No authentication required
+Request :
+{
+  "email": "user@example.com",
+  "otp": "123456"
+}
+Success Response :
+{
+  "success": true,
+  "message": "Email verified successfully. You can now log in.",
+  "data": {
+    "id": "uuid-string-format",
+    "email": "user@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "+1234567890",
+    "profile_image": null,
+    "is_email_verified": true,
+    "is_active": true,
+    "is_staff": false,
+    "is_superuser": false,
+    "created_at": "2026-07-04T08:00:00Z",
+    "updated_at": "2026-07-04T08:05:00Z"
+  }
+}
+
+## Resend OTP
+POST /api/v1/auth/resend-otp/
+Authentication : No authentication required
+Request:
+{
+  "email": "user@example.com",
+  "purpose": "registration"
+}
+
+Success Response :
+{
+  "success": true,
+  "message": "Verification OTP sent to your email."
+}
+
+## Login
+Used to authenticate a verified user.
+Endpoint
+POST /api/v1/auth/login/
+Authentication :No authentication required
+Request:
+{
+  "email": "user@example.com",
+  "password": "Password123!"
+}
+Success Response:
+{
+  "success": true,
+  "message": "Logged in successfully.",
+  "data": {
+    "access": "ACCESS_JWT_TOKEN",
+    "refresh": "REFRESH_JWT_TOKEN",
+    "user": {
+      "id": "uuid-string-format",
+      "email": "user@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "phone": "+1234567890",
+      "profile_image": null,
+      "is_email_verified": true,
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "created_at": "2026-07-04T08:00:00Z",
+      "updated_at": "2026-07-04T08:05:00Z"
+    }
+  }
+}
+## Refresh Token
+Used to generate a new access token.
+Endpoint:
+POST /api/v1/auth/token/refresh/
+Authentication : No authentication required
+Request:
+{
+  "refresh": "REFRESH_JWT_TOKEN"
+}
+Response:
+{
+  "success": true,
+  "message": "Token refreshed successfully.",
+  "data": {
+    "access": "NEW_ACCESS_TOKEN",
+    "refresh": "REFRESH_TOKEN"
+  }
+}
+## Logout
+Used to log out the current user.
+Endpoint
+POST /api/v1/auth/logout/
+Authentication : Required
+Header:
+Authorization: Bearer <access_token>
+Request:
+{
+  "refresh": "REFRESH_JWT_TOKEN"
+}
+Response:
+{
+  "success": true,
+  "message": "Logged out successfully."
+}
+## Get Active Sessions
+Endpoint
+GET /api/v1/auth/sessions/
+
+Authentication : Required
+
+Header:
+Authorization: Bearer <access_token>
+Response:
+{
+  "success": true,
+  "message": "Active sessions retrieved successfully.",
+  "data": [
+{
+      "id": "uuid-string-format",
+      "ip_address": "127.0.0.1",
+      "device_type": "Desktop",
+      "browser": "Chrome",
+      "os": "Windows",
+      "created_at": "2026-07-04T08:10:00Z",
+      "expires_at": "2026-07-11T08:10:00Z",
+      "is_current": true
+    }
+  ]
+}
+## Logout From All Devices
+Endpoint:
+POST /api/v1/auth/logout-all/
+Authentication: Required
+
+Header:
+Authorization: Bearer <access_token>
+Response:
+{
+  "success": true,
+  "message": "Logged out from all active sessions successfully."
+}
+
+
+
+
+### Docker  ###
+
+Docker can be used to run the backend and PostgreSQL together.
+Build the Spring Boot application: mvn clean package -DskipTests
+
+Build and start Docker containers: docker compose up --build
+
+Stop containers: docker compose down
+
+To rebuild after making code changes:
+
+mvn clean package -DskipTests
+docker compose up --build

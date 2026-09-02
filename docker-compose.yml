@@ -4,9 +4,9 @@ services:
     image: postgres:16
     container_name: registration-postgres
     environment:
-      POSTGRES_DB: registeration_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_ROOT_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -14,13 +14,16 @@ services:
 
   backend:
     build: .
+    image: invoice-backend
     container_name: registration-backend
     ports:
       - "9191:9191"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/registeration_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres123
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_ROOT_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JWT_SECRET: ${JWT_SECRET}
     depends_on:
       - postgres
 

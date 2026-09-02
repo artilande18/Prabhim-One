@@ -1,13 +1,8 @@
 package com.example.registeration.dto;
 
-import jakarta.validation.constraints.NotBlank;
-
 public class ResendOtpRequest {
 
-    @NotBlank(message = "Email is required")
     private String email;
-
-    @NotBlank(message = "Purpose is required")
     private String purpose;
 
     public String getEmail() {

@@ -3,71 +3,79 @@ package com.example.registeration.exception;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<?> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
-        return errorResponse(HttpStatus.CONFLICT, ex.getMessage());
-    }
-
-    @ExceptionHandler(EmailAlreadyVerifiedException.class)
-    public ResponseEntity<?> handleEmailAlreadyVerified(EmailAlreadyVerifiedException ex) {
-        return errorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Map<String, Object>> handleUserExists(UserAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("success", false, "message", ex.getMessage()));
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFound(UserNotFoundException ex) {
-        return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<Map<String, Object>> handleUserNotFound(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("success", false, "message", ex.getMessage()));
     }
 
-    @ExceptionHandler({InvalidOtpException.class, OtpExpiredException.class, InvalidPurposeException.class})
-    public ResponseEntity<?> handleBadRequest(RuntimeException ex) {
-        return errorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    @ExceptionHandler(InvalidOtpException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidOtp(InvalidOtpException ex) {
+        return ResponseEntity.badRequest()
+                .body(Map.of("success", false, "message", ex.getMessage()));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleUnexpected(Exception ex) {
-        return errorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred.");
+    @ExceptionHandler(OtpExpiredException.class)
+    public ResponseEntity<Map<String, Object>> handleOtpExpired(OtpExpiredException ex) {
+        return ResponseEntity.badRequest()
+                .body(Map.of("success", false, "message", ex.getMessage()));
     }
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
-
-        Map<String, String> fieldErrors = new LinkedHashMap<>();
-
-        ex.getBindingResult().getFieldErrors().forEach(
-                error -> fieldErrors.put(error.getField(), error.getDefaultMessage())
-        );
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("success", false);
-        body.put("message", "Validation failed");
-        body.put("errors", fieldErrors);
-
-        return ResponseEntity.badRequest().body(body);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, Object> error = new LinkedHashMap<>();
+        error.put("success", false);
+        error.put("message", "Validation failed");
+        error.put("errors", ex.getBindingResult().getFieldErrors());
+        return ResponseEntity.badRequest().body(error);
     }
 
-    private ResponseEntity<?> errorResponse(HttpStatus status, String message) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("success", false);
-        body.put("message", message);
-
-        return ResponseEntity.status(status).body(body);
+    // Fallback for any other RuntimeException
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRuntime(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("success", false, "message", ex.getMessage()));
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleNotFound(
+            ResourceNotFoundException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of(
+                        "success", false,
+                        "message", ex.getMessage(),
+                        "data", Map.of()
+                ));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleBadRequest(
+            IllegalArgumentException ex) {
+
+        return ResponseEntity
+                .badRequest()
+                .body(Map.of(
+                        "success", false,
+                        "message", ex.getMessage(),
+                        "data", Map.of()
+                ));
+    }
+    
 }

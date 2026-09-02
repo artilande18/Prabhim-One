@@ -5,30 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.example.registeration.entity.User;
-
 public class UserResponse {
-
-    public static UserResponse from(User user) {
-        UserResponse response = new UserResponse();
-
-        response.setId(user.getId());
-        response.setEmail(user.getEmail());
-        response.setFirstName(user.getFirstName());
-        response.setLastName(user.getLastName());
-        response.setPhone(user.getPhone());
-        response.setProfileImage(user.getProfileImage());
-
-        response.setEmailVerified(user.isEmailVerified());
-        response.setActive(user.isActive());
-        response.setStaff(user.isStaff());
-        response.setSuperuser(user.isSuperuser());
-
-        response.setCreatedAt(user.getCreatedAt());
-        response.setUpdatedAt(user.getUpdatedAt());
-
-        return response;
-    }
 
     private UUID id;
     private String email;
