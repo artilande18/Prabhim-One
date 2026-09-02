@@ -80,6 +80,16 @@ public class SecurityConfig {
                 "/api/v1/credit-notes",
                 "/api/v1/credit-notes/",
                 "/api/v1/credit-notes/{id}/",
+                "/api/v1/subscription/plans",
+                "/api/v1/subscription/plans/",
+                "/api/v1/subscription/current",
+                "/api/v1/subscription/current/",
+                "/api/v1/subscription/subscribe",
+                "/api/v1/subscription/subscribe/",
+                "/api/v1/subscription/cancel",
+                "/api/v1/subscription/cancel/",
+                "/api/v1/subscription/billing-history",
+                "/api/v1/subscription/billing-history/",
                 "/error" //  allow error forwarding
             ).permitAll()
             .anyRequest().authenticated());
