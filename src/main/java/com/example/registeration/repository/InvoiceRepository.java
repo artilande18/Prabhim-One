@@ -31,4 +31,8 @@ public interface InvoiceRepository
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
             Pageable pageable);
+
+    java.util.List<Invoice> findByIsDeletedFalse();
+    java.util.List<Invoice> findByIsDeletedFalseAndInvoiceDateBetween(LocalDate startDate, LocalDate endDate);
 }
+

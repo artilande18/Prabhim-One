@@ -38,6 +38,7 @@ public class SecurityConfig {
                 "/api/invoices/{id}/mark-sent/",
                 "/api/customers/",
                 "/api/customers/{id}/",
+                "/api/customers/by-gst/**",
                 "/api/customers/{id}/restore/",
                 "/api/customers/{id}/deactivate/",
                 "/api/customers/{id}/activate/",
@@ -90,6 +91,17 @@ public class SecurityConfig {
                 "/api/v1/subscription/cancel/",
                 "/api/v1/subscription/billing-history",
                 "/api/v1/subscription/billing-history/",
+                "/api/v1/reports/profit-loss",
+                "/api/v1/reports/profit-loss/",
+                "/api/v1/reports/sales-summary",
+                "/api/v1/reports/sales-summary/",
+                "/api/v1/reports/tax-summary",
+                "/api/v1/reports/tax-summary/",
+                "/api/v1/reports/receivables",
+                "/api/v1/reports/receivables/",
+                "/api/v1/reports/payables",
+                "/api/v1/reports/payables/",
+                "/api/v1/reports/**",
                 "/error" //  allow error forwarding
             ).permitAll()
             .anyRequest().authenticated());

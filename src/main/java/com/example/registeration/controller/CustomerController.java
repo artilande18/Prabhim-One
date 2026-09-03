@@ -76,6 +76,23 @@ public class CustomerController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping({"/by-gst/{gstNumber}", "/by-gst/{gstNumber}/"})
+    public ResponseEntity<?> getCustomerByGstNumber(
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @PathVariable String gstNumber) {
+
+        UUID userId = getUserId(authHeader);
+        CustomerResponse customer = customerService.getCustomerByGstNumber(gstNumber, userId);
+
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("success", true);
+        response.put("message", "Customer details retrieved successfully by GST number");
+        response.put("data", customer);
+
+        return ResponseEntity.ok(response);
+    }
+
+
     @PutMapping("/{id}/")
     public ResponseEntity<?> updateCustomerFull(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
