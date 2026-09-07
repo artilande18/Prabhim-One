@@ -49,7 +49,7 @@ public class PaymentController {
         }
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping("/")
     public ResponseEntity<?> listPayments(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(name = "invoice_id", required = false) UUID invoiceId,
@@ -59,7 +59,7 @@ public class PaymentController {
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping({"/{id}", "/{id}/"})
+    @GetMapping("/{id}/")
     public ResponseEntity<?> getPayment(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable UUID id) {
@@ -68,7 +68,7 @@ public class PaymentController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping({"", "/"})
+    @PostMapping("/")
     public ResponseEntity<?> recordPayment(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @Valid @RequestBody PaymentRequest request) {
@@ -77,7 +77,7 @@ public class PaymentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @DeleteMapping({"/{id}", "/{id}/"})
+    @DeleteMapping("/{id}/")
     public ResponseEntity<?> deletePayment(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable UUID id) {

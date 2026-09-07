@@ -76,7 +76,7 @@ public class CustomerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping({"/by-gst/{gstNumber}", "/by-gst/{gstNumber}/"})
+    @GetMapping("/by-gst/{gstNumber}/")
     public ResponseEntity<?> getCustomerByGstNumber(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String gstNumber) {

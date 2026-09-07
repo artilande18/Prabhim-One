@@ -50,7 +50,7 @@ public class SubscriptionController {
         }
     }
 
-    @GetMapping({"/plans", "/plans/"})
+    @GetMapping("/plans/")
     public ResponseEntity<?> getPlans(
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         getUserId(authHeader);
@@ -58,7 +58,7 @@ public class SubscriptionController {
         return ResponseEntity.ok(plans);
     }
 
-    @GetMapping({"/current", "/current/"})
+    @GetMapping("/current/")
     public ResponseEntity<?> getCurrentSubscription(
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         UUID userId = getUserId(authHeader);
@@ -66,7 +66,7 @@ public class SubscriptionController {
         return ResponseEntity.ok(current);
     }
 
-    @PostMapping({"/subscribe", "/subscribe/"})
+    @PostMapping("/subscribe/")
     public ResponseEntity<?> subscribe(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @Valid @RequestBody SubscribeRequest request) {
@@ -75,7 +75,7 @@ public class SubscriptionController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping({"/cancel", "/cancel/"})
+    @PostMapping("/cancel/")
     public ResponseEntity<?> cancelSubscription(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestBody(required = false) CancelSubscriptionRequest request) {
@@ -88,7 +88,7 @@ public class SubscriptionController {
         ));
     }
 
-    @GetMapping({"/billing-history", "/billing-history/"})
+    @GetMapping("/billing-history/")
     public ResponseEntity<?> getBillingHistory(
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         UUID userId = getUserId(authHeader);

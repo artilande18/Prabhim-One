@@ -34,7 +34,7 @@ public class ReportController {
     }
 
     // 1. Profit & Loss Report
-    @GetMapping({"/profit-loss/", "/profit-loss"})
+    @GetMapping("/profit-loss/")
     public ResponseEntity<?> getProfitLossReport(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(name = "start_date", required = false)
@@ -54,7 +54,7 @@ public class ReportController {
     }
 
     // 2. Sales Summary Report
-    @GetMapping({"/sales-summary/", "/sales-summary"})
+    @GetMapping("/sales-summary/")
     public ResponseEntity<?> getSalesSummaryReport(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(name = "start_date", required = false)
@@ -75,7 +75,7 @@ public class ReportController {
     }
 
     // 3. GST / Tax Summary Report
-    @GetMapping({"/tax-summary/", "/tax-summary"})
+    @GetMapping("/tax-summary/")
     public ResponseEntity<?> getTaxSummaryReport(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(name = "start_date", required = false)
@@ -95,7 +95,7 @@ public class ReportController {
     }
 
     // 4. Customer Receivables Aging Report
-    @GetMapping({"/receivables/", "/receivables"})
+    @GetMapping("/receivables/")
     public ResponseEntity<?> getReceivablesReport(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(name = "as_of_date", required = false)
@@ -113,7 +113,7 @@ public class ReportController {
     }
 
     // 5. Vendor Payables Report
-    @GetMapping({"/payables/", "/payables"})
+    @GetMapping("/payables/")
     public ResponseEntity<?> getPayablesReport(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(name = "as_of_date", required = false)

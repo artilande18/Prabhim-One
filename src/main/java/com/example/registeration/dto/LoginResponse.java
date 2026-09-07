@@ -7,29 +7,29 @@ public class LoginResponse {
     private UserResponse user;
 
     public String getAccess() {
-    return access;
-}
+        return access;
+    }
 
-public void setAccess(String access) {
-    this.access = access;
-}
+    public void setAccess(String access) {
+        this.access = access;
+    }
 
-public String getRefresh() {
-    return refresh;
-}
+    public String getRefresh() {
+        return refresh;
+    }
 
-public void setRefresh(String refresh) {
-    this.refresh = refresh;
-}
+    public void setRefresh(String refresh) {
+        this.refresh = refresh;
+        }
 
-public UserResponse getUser() {
-    return user;
-}
+    public UserResponse getUser() {
+        return user;
+    }
 
-public void setUser(UserResponse user) {
-    this.user = user;
-}
+    public void setUser(UserResponse user) {
+        this.user = user;
+    }
 
 
-    
+
 }
