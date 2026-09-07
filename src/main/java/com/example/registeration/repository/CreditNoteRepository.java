@@ -30,4 +30,7 @@ public interface CreditNoteRepository extends JpaRepository<CreditNote, UUID> {
     );
 
     Optional<CreditNote> findByIdAndIsDeletedFalse(UUID id);
+    java.util.List<CreditNote> findByIsDeletedFalse();
+    java.util.List<CreditNote> findByIsDeletedFalseAndCreditNoteDateBetween(LocalDate startDate, LocalDate endDate);
 }
+

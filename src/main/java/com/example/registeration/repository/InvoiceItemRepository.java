@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.registeration.entity.InvoiceItem;
 
 @Repository
-public interface InvoiceItemRepository
-        extends JpaRepository<InvoiceItem, UUID> {
+public interface InvoiceItemRepository extends JpaRepository<InvoiceItem, UUID> {
 
     List<InvoiceItem> findByInvoiceId(UUID invoiceId);
 }

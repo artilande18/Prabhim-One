@@ -112,6 +112,23 @@ public class CustomerService {
         return mapToCustomerResponse(customer);
     }
 
+    public CustomerResponse getCustomerByGstNumber(String gstNumber, UUID userId) {
+        // Validate user exists
+        if (!userRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("User not found with id: " + userId);
+        }
+
+        if (gstNumber == null || gstNumber.trim().isEmpty()) {
+            throw new IllegalArgumentException("GST number cannot be empty");
+        }
+
+        Customer customer = customerRepository.findFirstByGstNumberIgnoreCaseAndIsDeletedFalse(gstNumber.trim())
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with GST number: " + gstNumber.trim()));
+
+        return mapToCustomerResponse(customer);
+    }
+
+
     @Transactional
     public CustomerResponse updateCustomer(UUID id, UpdateCustomerRequest request, boolean isPartial, UUID userId) {
         // Validate user exists

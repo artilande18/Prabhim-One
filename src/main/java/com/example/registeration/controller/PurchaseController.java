@@ -36,7 +36,7 @@ public class PurchaseController {
         return jwtService.extractUserId(token);
     }
 
-    @PostMapping({"", "/"})
+    @PostMapping("/")
     public ResponseEntity<?> createPurchase(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @Valid @RequestBody PurchaseRequest request) {
@@ -47,7 +47,7 @@ public class PurchaseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping("/")
     public ResponseEntity<?> listPurchases(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(required = false) String search,
@@ -65,7 +65,7 @@ public class PurchaseController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping({"/{id}", "/{id}/"})
+    @GetMapping("/{id}/")
     public ResponseEntity<?> getPurchaseDetails(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id) {
@@ -75,7 +75,7 @@ public class PurchaseController {
         return ResponseEntity.ok(record);
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{id}/" , method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<?> updatePurchase(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id,
@@ -86,7 +86,7 @@ public class PurchaseController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping({"/{id}", "/{id}/"})
+    @DeleteMapping("/{id}/")
     public ResponseEntity<?> deletePurchase(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id) {

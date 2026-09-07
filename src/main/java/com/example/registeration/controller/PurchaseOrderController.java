@@ -18,7 +18,7 @@ import com.example.registeration.service.PurchaseOrderService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping({"/api/v1/purchase-orders", "/api/v1/purchaseorders"})
+@RequestMapping("/api/v1/purchase-orders")
 public class PurchaseOrderController {
 
     private final PurchaseOrderService purchaseOrderService;
@@ -37,7 +37,7 @@ public class PurchaseOrderController {
         return jwtService.extractUserId(token);
     }
 
-    @PostMapping({"", "/"})
+    @PostMapping( "/")
     public ResponseEntity<?> createPurchaseOrder(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @Valid @RequestBody PurchaseOrderRequest request) {
@@ -48,7 +48,7 @@ public class PurchaseOrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping("/")
     public ResponseEntity<?> listPurchaseOrders(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @RequestParam(required = false) String search,
@@ -66,7 +66,7 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping({"/{id}", "/{id}/"})
+    @GetMapping("/{id}/")
     public ResponseEntity<?> getPurchaseOrderDetails(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id) {
@@ -76,7 +76,7 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(po);
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/{id}/" , method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<?> updatePurchaseOrder(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id,
@@ -87,7 +87,7 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping({"/{id}", "/{id}/"})
+    @DeleteMapping("/{id}/")
     public ResponseEntity<?> cancelPurchaseOrder(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id) {
@@ -102,7 +102,7 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping({"/{id}/restore", "/{id}/restore/"})
+    @PostMapping( "/{id}/restore/")
     public ResponseEntity<?> restoreCancelledPO(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id) {
@@ -112,7 +112,7 @@ public class PurchaseOrderController {
         return ResponseEntity.ok(restored);
     }
 
-    @DeleteMapping({"/{id}/permanent", "/{id}/permanent/"})
+    @DeleteMapping("/{id}/permanent/")
     public ResponseEntity<?> permanentlyDeletePO(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id) {
@@ -125,7 +125,7 @@ public class PurchaseOrderController {
         ));
     }
 
-    @PostMapping({"/{id}/convert-to-bill", "/{id}/convert-to-bill/"})
+    @PostMapping( "/{id}/convert-to-bill/")
     public ResponseEntity<?> convertToBill(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id,

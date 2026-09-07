@@ -40,7 +40,7 @@ public class ExpenseController {
         }
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping("/")
     public ResponseEntity<?> listExpenses(
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         getUserId(authHeader);
@@ -48,7 +48,7 @@ public class ExpenseController {
         return ResponseEntity.ok(list);
     }
 
-    @PostMapping({"", "/"})
+    @PostMapping("/")
     public ResponseEntity<?> recordExpense(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @Valid @RequestBody ExpenseRequest request) {
@@ -57,7 +57,7 @@ public class ExpenseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @DeleteMapping({"/{id}", "/{id}/"})
+    @DeleteMapping("/{id}/")
     public ResponseEntity<?> deleteExpense(
             @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable UUID id) {
